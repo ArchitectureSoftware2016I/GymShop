@@ -6,44 +6,39 @@
 package DataAccess.Entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author japrietov
+ * @author juansaab
  */
 @Entity
 @Table(name = "Users")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.idUsers = :idUsers"),
+    @NamedQuery(name = "Users.findByIdUser", query = "SELECT u FROM Users u WHERE u.idUser = :idUser"),
     @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
-    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username")})
+    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
+    @NamedQuery(name = "Users.findByRol", query = "SELECT u FROM Users u WHERE u.rol = :rol")})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idUsers")
-    private Integer idUsers;
+    @Column(name = "idUser")
+    private Integer idUser;
     @Size(max = 45)
     @Column(name = "name")
     private String name;
@@ -53,27 +48,22 @@ public class Users implements Serializable {
     @Size(max = 45)
     @Column(name = "username")
     private String username;
-    @JoinColumn(name = "idRoles", referencedColumnName = "idRoles")
-    @ManyToOne(optional = false)
-    private Roles idRoles;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSeller")
-    private Collection<Purchases> purchasesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBuyer")
-    private Collection<Purchases> purchasesCollection1;
+    @Column(name = "rol")
+    private Integer rol;
 
     public Users() {
     }
 
-    public Users(Integer idUsers) {
-        this.idUsers = idUsers;
+    public Users(Integer idUser) {
+        this.idUser = idUser;
     }
 
-    public Integer getIdUsers() {
-        return idUsers;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setIdUsers(Integer idUsers) {
-        this.idUsers = idUsers;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -100,36 +90,18 @@ public class Users implements Serializable {
         this.username = username;
     }
 
-    public Roles getIdRoles() {
-        return idRoles;
+    public Integer getRol() {
+        return rol;
     }
 
-    public void setIdRoles(Roles idRoles) {
-        this.idRoles = idRoles;
-    }
-
-    @XmlTransient
-    public Collection<Purchases> getPurchasesCollection() {
-        return purchasesCollection;
-    }
-
-    public void setPurchasesCollection(Collection<Purchases> purchasesCollection) {
-        this.purchasesCollection = purchasesCollection;
-    }
-
-    @XmlTransient
-    public Collection<Purchases> getPurchasesCollection1() {
-        return purchasesCollection1;
-    }
-
-    public void setPurchasesCollection1(Collection<Purchases> purchasesCollection1) {
-        this.purchasesCollection1 = purchasesCollection1;
+    public void setRol(Integer rol) {
+        this.rol = rol;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUsers != null ? idUsers.hashCode() : 0);
+        hash += (idUser != null ? idUser.hashCode() : 0);
         return hash;
     }
 
@@ -140,7 +112,7 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) object;
-        if ((this.idUsers == null && other.idUsers != null) || (this.idUsers != null && !this.idUsers.equals(other.idUsers))) {
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
             return false;
         }
         return true;
@@ -148,7 +120,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Users[ idUsers=" + idUsers + " ]";
+        return "DataAccess.Entity.Users[ idUser=" + idUser + " ]";
     }
     
 }

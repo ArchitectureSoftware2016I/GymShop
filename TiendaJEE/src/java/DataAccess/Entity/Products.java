@@ -6,37 +6,33 @@
 package DataAccess.Entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author japrietov
+ * @author juansaab
  */
 @Entity
-@Table(name = "Product")
+@Table(name = "Products")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByIdProduct", query = "SELECT p FROM Product p WHERE p.idProduct = :idProduct"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByPicture", query = "SELECT p FROM Product p WHERE p.picture = :picture"),
-    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
-    @NamedQuery(name = "Product.findByAvailable", query = "SELECT p FROM Product p WHERE p.available = :available")})
-public class Product implements Serializable {
+    @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p"),
+    @NamedQuery(name = "Products.findByIdProduct", query = "SELECT p FROM Products p WHERE p.idProduct = :idProduct"),
+    @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
+    @NamedQuery(name = "Products.findByPicture", query = "SELECT p FROM Products p WHERE p.picture = :picture"),
+    @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price"),
+    @NamedQuery(name = "Products.findByAvailable", query = "SELECT p FROM Products p WHERE p.available = :available")})
+public class Products implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,13 +55,11 @@ public class Product implements Serializable {
     private Float price;
     @Column(name = "available")
     private Integer available;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProduc")
-    private Collection<PurchaseDetails> purchaseDetailsCollection;
 
-    public Product() {
+    public Products() {
     }
 
-    public Product(Integer idProduct) {
+    public Products(Integer idProduct) {
         this.idProduct = idProduct;
     }
 
@@ -117,15 +111,6 @@ public class Product implements Serializable {
         this.available = available;
     }
 
-    @XmlTransient
-    public Collection<PurchaseDetails> getPurchaseDetailsCollection() {
-        return purchaseDetailsCollection;
-    }
-
-    public void setPurchaseDetailsCollection(Collection<PurchaseDetails> purchaseDetailsCollection) {
-        this.purchaseDetailsCollection = purchaseDetailsCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -136,10 +121,10 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
+        if (!(object instanceof Products)) {
             return false;
         }
-        Product other = (Product) object;
+        Products other = (Products) object;
         if ((this.idProduct == null && other.idProduct != null) || (this.idProduct != null && !this.idProduct.equals(other.idProduct))) {
             return false;
         }
@@ -148,7 +133,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Product[ idProduct=" + idProduct + " ]";
+        return "DataAccess.Entity.Products[ idProduct=" + idProduct + " ]";
     }
     
 }

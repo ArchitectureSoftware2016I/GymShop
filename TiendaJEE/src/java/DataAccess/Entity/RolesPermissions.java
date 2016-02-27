@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,14 +18,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author japrietov
+ * @author juansaab
  */
 @Entity
 @Table(name = "RolesPermissions")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolesPermissions.findAll", query = "SELECT r FROM RolesPermissions r"),
-    @NamedQuery(name = "RolesPermissions.findByIdRolesPermissions", query = "SELECT r FROM RolesPermissions r WHERE r.idRolesPermissions = :idRolesPermissions")})
+    @NamedQuery(name = "RolesPermissions.findByIdRolesPermissions", query = "SELECT r FROM RolesPermissions r WHERE r.idRolesPermissions = :idRolesPermissions"),
+    @NamedQuery(name = "RolesPermissions.findByIdRole", query = "SELECT r FROM RolesPermissions r WHERE r.idRole = :idRole"),
+    @NamedQuery(name = "RolesPermissions.findByIdPermission", query = "SELECT r FROM RolesPermissions r WHERE r.idPermission = :idPermission")})
 public class RolesPermissions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,18 +36,26 @@ public class RolesPermissions implements Serializable {
     @NotNull
     @Column(name = "idRolesPermissions")
     private Integer idRolesPermissions;
-    @JoinColumn(name = "idRole", referencedColumnName = "idRoles")
-    @ManyToOne(optional = false)
-    private Roles idRole;
-    @JoinColumn(name = "idPermisson", referencedColumnName = "idPermissons")
-    @ManyToOne(optional = false)
-    private Permissons idPermisson;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idRole")
+    private int idRole;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idPermission")
+    private int idPermission;
 
     public RolesPermissions() {
     }
 
     public RolesPermissions(Integer idRolesPermissions) {
         this.idRolesPermissions = idRolesPermissions;
+    }
+
+    public RolesPermissions(Integer idRolesPermissions, int idRole, int idPermission) {
+        this.idRolesPermissions = idRolesPermissions;
+        this.idRole = idRole;
+        this.idPermission = idPermission;
     }
 
     public Integer getIdRolesPermissions() {
@@ -58,20 +66,20 @@ public class RolesPermissions implements Serializable {
         this.idRolesPermissions = idRolesPermissions;
     }
 
-    public Roles getIdRole() {
+    public int getIdRole() {
         return idRole;
     }
 
-    public void setIdRole(Roles idRole) {
+    public void setIdRole(int idRole) {
         this.idRole = idRole;
     }
 
-    public Permissons getIdPermisson() {
-        return idPermisson;
+    public int getIdPermission() {
+        return idPermission;
     }
 
-    public void setIdPermisson(Permissons idPermisson) {
-        this.idPermisson = idPermisson;
+    public void setIdPermission(int idPermission) {
+        this.idPermission = idPermission;
     }
 
     @Override

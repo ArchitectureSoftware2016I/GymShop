@@ -22,37 +22,37 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juansaab
  */
 @Entity
-@Table(name = "Roles")
+@Table(name = "Permissions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
-    @NamedQuery(name = "Roles.findByIdRol", query = "SELECT r FROM Roles r WHERE r.idRol = :idRol"),
-    @NamedQuery(name = "Roles.findByName", query = "SELECT r FROM Roles r WHERE r.name = :name")})
-public class Roles implements Serializable {
+    @NamedQuery(name = "Permissions.findAll", query = "SELECT p FROM Permissions p"),
+    @NamedQuery(name = "Permissions.findByIdPermission", query = "SELECT p FROM Permissions p WHERE p.idPermission = :idPermission"),
+    @NamedQuery(name = "Permissions.findByName", query = "SELECT p FROM Permissions p WHERE p.name = :name")})
+public class Permissions implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idRol")
-    private Integer idRol;
+    @Column(name = "idPermission")
+    private Integer idPermission;
     @Size(max = 45)
     @Column(name = "name")
     private String name;
 
-    public Roles() {
+    public Permissions() {
     }
 
-    public Roles(Integer idRol) {
-        this.idRol = idRol;
+    public Permissions(Integer idPermission) {
+        this.idPermission = idPermission;
     }
 
-    public Integer getIdRol() {
-        return idRol;
+    public Integer getIdPermission() {
+        return idPermission;
     }
 
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setIdPermission(Integer idPermission) {
+        this.idPermission = idPermission;
     }
 
     public String getName() {
@@ -66,18 +66,18 @@ public class Roles implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idRol != null ? idRol.hashCode() : 0);
+        hash += (idPermission != null ? idPermission.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Roles)) {
+        if (!(object instanceof Permissions)) {
             return false;
         }
-        Roles other = (Roles) object;
-        if ((this.idRol == null && other.idRol != null) || (this.idRol != null && !this.idRol.equals(other.idRol))) {
+        Permissions other = (Permissions) object;
+        if ((this.idPermission == null && other.idPermission != null) || (this.idPermission != null && !this.idPermission.equals(other.idPermission))) {
             return false;
         }
         return true;
@@ -85,7 +85,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Roles[ idRol=" + idRol + " ]";
+        return "DataAccess.Entity.Permissions[ idPermission=" + idPermission + " ]";
     }
     
 }

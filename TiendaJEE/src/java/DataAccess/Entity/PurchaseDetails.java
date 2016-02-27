@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,14 +18,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author japrietov
+ * @author juansaab
  */
 @Entity
 @Table(name = "PurchaseDetails")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PurchaseDetails.findAll", query = "SELECT p FROM PurchaseDetails p"),
-    @NamedQuery(name = "PurchaseDetails.findByIdPurchasesDetails", query = "SELECT p FROM PurchaseDetails p WHERE p.idPurchasesDetails = :idPurchasesDetails"),
+    @NamedQuery(name = "PurchaseDetails.findByIdPurchaseDetails", query = "SELECT p FROM PurchaseDetails p WHERE p.idPurchaseDetails = :idPurchaseDetails"),
+    @NamedQuery(name = "PurchaseDetails.findByIdPurchase", query = "SELECT p FROM PurchaseDetails p WHERE p.idPurchase = :idPurchase"),
+    @NamedQuery(name = "PurchaseDetails.findByIdProduct", query = "SELECT p FROM PurchaseDetails p WHERE p.idProduct = :idProduct"),
     @NamedQuery(name = "PurchaseDetails.findByQuantity", query = "SELECT p FROM PurchaseDetails p WHERE p.quantity = :quantity")})
 public class PurchaseDetails implements Serializable {
 
@@ -35,67 +35,58 @@ public class PurchaseDetails implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idPurchasesDetails")
-    private Integer idPurchasesDetails;
-    @Basic(optional = false)
-    @NotNull
+    @Column(name = "idPurchaseDetails")
+    private Integer idPurchaseDetails;
+    @Column(name = "idPurchase")
+    private Integer idPurchase;
+    @Column(name = "idProduct")
+    private Integer idProduct;
     @Column(name = "quantity")
-    private int quantity;
-    @JoinColumn(name = "idProduc", referencedColumnName = "idProduct")
-    @ManyToOne(optional = false)
-    private Product idProduc;
-    @JoinColumn(name = "idPurchase", referencedColumnName = "idPurchases")
-    @ManyToOne(optional = false)
-    private Purchases idPurchase;
+    private Integer quantity;
 
     public PurchaseDetails() {
     }
 
-    public PurchaseDetails(Integer idPurchasesDetails) {
-        this.idPurchasesDetails = idPurchasesDetails;
+    public PurchaseDetails(Integer idPurchaseDetails) {
+        this.idPurchaseDetails = idPurchaseDetails;
     }
 
-    public PurchaseDetails(Integer idPurchasesDetails, int quantity) {
-        this.idPurchasesDetails = idPurchasesDetails;
-        this.quantity = quantity;
+    public Integer getIdPurchaseDetails() {
+        return idPurchaseDetails;
     }
 
-    public Integer getIdPurchasesDetails() {
-        return idPurchasesDetails;
+    public void setIdPurchaseDetails(Integer idPurchaseDetails) {
+        this.idPurchaseDetails = idPurchaseDetails;
     }
 
-    public void setIdPurchasesDetails(Integer idPurchasesDetails) {
-        this.idPurchasesDetails = idPurchasesDetails;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Product getIdProduc() {
-        return idProduc;
-    }
-
-    public void setIdProduc(Product idProduc) {
-        this.idProduc = idProduc;
-    }
-
-    public Purchases getIdPurchase() {
+    public Integer getIdPurchase() {
         return idPurchase;
     }
 
-    public void setIdPurchase(Purchases idPurchase) {
+    public void setIdPurchase(Integer idPurchase) {
         this.idPurchase = idPurchase;
+    }
+
+    public Integer getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(Integer idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPurchasesDetails != null ? idPurchasesDetails.hashCode() : 0);
+        hash += (idPurchaseDetails != null ? idPurchaseDetails.hashCode() : 0);
         return hash;
     }
 
@@ -106,7 +97,7 @@ public class PurchaseDetails implements Serializable {
             return false;
         }
         PurchaseDetails other = (PurchaseDetails) object;
-        if ((this.idPurchasesDetails == null && other.idPurchasesDetails != null) || (this.idPurchasesDetails != null && !this.idPurchasesDetails.equals(other.idPurchasesDetails))) {
+        if ((this.idPurchaseDetails == null && other.idPurchaseDetails != null) || (this.idPurchaseDetails != null && !this.idPurchaseDetails.equals(other.idPurchaseDetails))) {
             return false;
         }
         return true;
@@ -114,7 +105,7 @@ public class PurchaseDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.PurchaseDetails[ idPurchasesDetails=" + idPurchasesDetails + " ]";
+        return "DataAccess.Entity.PurchaseDetails[ idPurchaseDetails=" + idPurchaseDetails + " ]";
     }
     
 }

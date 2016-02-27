@@ -6,35 +6,31 @@
 package DataAccess.Entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author japrietov
+ * @author juansaab
  */
 @Entity
 @Table(name = "Purchases")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Purchases.findAll", query = "SELECT p FROM Purchases p"),
-    @NamedQuery(name = "Purchases.findByIdPurchases", query = "SELECT p FROM Purchases p WHERE p.idPurchases = :idPurchases"),
+    @NamedQuery(name = "Purchases.findByIdPurchase", query = "SELECT p FROM Purchases p WHERE p.idPurchase = :idPurchase"),
+    @NamedQuery(name = "Purchases.findByBuyerId", query = "SELECT p FROM Purchases p WHERE p.buyerId = :buyerId"),
+    @NamedQuery(name = "Purchases.findBySellerId", query = "SELECT p FROM Purchases p WHERE p.sellerId = :sellerId"),
     @NamedQuery(name = "Purchases.findByDate", query = "SELECT p FROM Purchases p WHERE p.date = :date"),
     @NamedQuery(name = "Purchases.findByTotal", query = "SELECT p FROM Purchases p WHERE p.total = :total")})
 public class Purchases implements Serializable {
@@ -43,36 +39,48 @@ public class Purchases implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idPurchases")
-    private Integer idPurchases;
+    @Column(name = "idPurchase")
+    private Integer idPurchase;
+    @Column(name = "buyerId")
+    private Integer buyerId;
+    @Column(name = "sellerId")
+    private Integer sellerId;
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total")
     private Float total;
-    @JoinColumn(name = "idSeller", referencedColumnName = "idUsers")
-    @ManyToOne(optional = false)
-    private Users idSeller;
-    @JoinColumn(name = "idBuyer", referencedColumnName = "idUsers")
-    @ManyToOne(optional = false)
-    private Users idBuyer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPurchase")
-    private Collection<PurchaseDetails> purchaseDetailsCollection;
 
     public Purchases() {
     }
 
-    public Purchases(Integer idPurchases) {
-        this.idPurchases = idPurchases;
+    public Purchases(Integer idPurchase) {
+        this.idPurchase = idPurchase;
     }
 
-    public Integer getIdPurchases() {
-        return idPurchases;
+    public Integer getIdPurchase() {
+        return idPurchase;
     }
 
-    public void setIdPurchases(Integer idPurchases) {
-        this.idPurchases = idPurchases;
+    public void setIdPurchase(Integer idPurchase) {
+        this.idPurchase = idPurchase;
+    }
+
+    public Integer getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(Integer buyerId) {
+        this.buyerId = buyerId;
+    }
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
     }
 
     public Date getDate() {
@@ -91,35 +99,10 @@ public class Purchases implements Serializable {
         this.total = total;
     }
 
-    public Users getIdSeller() {
-        return idSeller;
-    }
-
-    public void setIdSeller(Users idSeller) {
-        this.idSeller = idSeller;
-    }
-
-    public Users getIdBuyer() {
-        return idBuyer;
-    }
-
-    public void setIdBuyer(Users idBuyer) {
-        this.idBuyer = idBuyer;
-    }
-
-    @XmlTransient
-    public Collection<PurchaseDetails> getPurchaseDetailsCollection() {
-        return purchaseDetailsCollection;
-    }
-
-    public void setPurchaseDetailsCollection(Collection<PurchaseDetails> purchaseDetailsCollection) {
-        this.purchaseDetailsCollection = purchaseDetailsCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPurchases != null ? idPurchases.hashCode() : 0);
+        hash += (idPurchase != null ? idPurchase.hashCode() : 0);
         return hash;
     }
 
@@ -130,7 +113,7 @@ public class Purchases implements Serializable {
             return false;
         }
         Purchases other = (Purchases) object;
-        if ((this.idPurchases == null && other.idPurchases != null) || (this.idPurchases != null && !this.idPurchases.equals(other.idPurchases))) {
+        if ((this.idPurchase == null && other.idPurchase != null) || (this.idPurchase != null && !this.idPurchase.equals(other.idPurchase))) {
             return false;
         }
         return true;
@@ -138,7 +121,7 @@ public class Purchases implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Purchases[ idPurchases=" + idPurchases + " ]";
+        return "DataAccess.Entity.Purchases[ idPurchase=" + idPurchase + " ]";
     }
     
 }
