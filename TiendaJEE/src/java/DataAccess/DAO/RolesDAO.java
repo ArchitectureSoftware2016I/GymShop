@@ -5,7 +5,7 @@
  */
 package DataAccess.DAO;
 
-import DataAccess.Entity.Users;
+import DataAccess.Entity.Roles;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,98 +14,74 @@ import javax.persistence.Query;
 
 /**
  *
- * @author juansaab
+ * @author Jonnathan
  */
-public class UsersDAO {
-    
+public class RolesDAO {
     public EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("TiendaJEEPU");
     
-    public Users persist(Users user) {
+    public Roles persist(Roles role) {
         EntityManager em = emf1.createEntityManager();
         em.getTransaction().begin();
         
         try {
-            em.persist(user);
+            em.persist(role);
             em.getTransaction().commit();
         } catch(Exception e) {
             em.getTransaction().rollback();
         } finally {
             em.close();
-            return user;  
+            return role;  
         }
     }
     
-    public boolean validateLogin(String username, String password) {
+    public Roles searchById(Integer idRoles) {
         EntityManager em = emf1.createEntityManager();
-        Users user = null;
-        Query q = em.createNamedQuery("Users.findByUsername");
-        q.setParameter("username", username);
- 
-        try {
-            user = (Users) q.getSingleResult();
-            if (user.getPassword().equals(password)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        } finally {
-            em.close();
-        }
-    }
-    
-    public Users searchById(Integer idUser) {
-        EntityManager em = emf1.createEntityManager();
-        Users user = null;
+        Roles role = null;
         
         try {
-            user = em.find(Users.class
-                    , idUser);
+            role = em.find(Roles.class
+                    , idRoles);
         } catch (Exception e){
         } finally {
             em.close();
-            return user;
+            return role;
         }
     }
     
-    public Users searchByUsername(String username) {
+    public Roles searchByName(String name) {
         EntityManager em = emf1.createEntityManager();
-        Users user = null;
-        Query q = em.createNamedQuery("Users.findByUsername");
-        q.setParameter(1, username);
+        Roles role = null;
+        Query q = em.createNamedQuery("Roles.findByName");
+        q.setParameter(1, name);
         try {          
-            user = (Users) q.getSingleResult();
+            role = (Roles) q.getSingleResult();
         } catch (Exception e){
         } finally {
             em.close();
-            return user;
+            return role;
         }
     }
     
-    public List<Users> searchAll() {
+    public List<Roles> searchAll() {
         EntityManager em = emf1.createEntityManager();
-        List<Users> users = null;
-        Query q = em.createNamedQuery("Users.findAll");
+        List<Roles> roles = null;
+        Query q = em.createNamedQuery("Roles.findAll");
         try {          
-            users = q.getResultList();
+            roles = q.getResultList();
         } catch (Exception e){
         } finally {
             em.close();
-            return users;
+            return roles;
         }
     }
     
-    public void edit(Users user){
-        Users userNew;
+    public void edit(Roles role){
+        Roles roleNew;
         EntityManager em = emf1.createEntityManager();  
         em.getTransaction().begin();
         try {
-            userNew = em.merge(em.find(Users.class, user.getIdUser())); 
-            userNew.setName(user.getName());
-            userNew.setPassword(user.getPassword());
-            userNew.setRol(user.getRol());
+            roleNew = em.merge(em.find(Roles.class, role.getIdRol())); 
+            roleNew.setName(role.getName());
             em.getTransaction().commit();
         } catch (Exception e){
             em.getTransaction().rollback();
@@ -116,17 +92,16 @@ public class UsersDAO {
     
     public boolean isEmpty() {
         EntityManager em = emf1.createEntityManager();
-        List<Users> users = null;
-        Query q = em.createNamedQuery("Users.findAll");
+        List<Roles> roles = null;
+        Query q = em.createNamedQuery("Roles.findAll");
         try {          
-            users = q.getResultList();
+            roles = q.getResultList();
         } catch (Exception e){
         } finally {
             em.close();
-            if (users == null){return true;}
+            if (roles == null){return true;}
             else {return false;}
         }
     }
-    
     
 }
