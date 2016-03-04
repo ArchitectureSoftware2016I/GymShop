@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="TiendaJEEPU" transaction-type="JTA">
-    <jta-data-source>java:app/TiendaJEE_DS</jta-data-source>
+    <jta-data-source>java:app/TiendaJuan</jta-data-source>
+    <class>DataAccess.Entity.Permission</class>
+    <class>DataAccess.Entity.Product</class>
+    <class>DataAccess.Entity.Purchase</class>
+    <class>DataAccess.Entity.PurchaseDetails</class>
+    <class>DataAccess.Entity.Rol</class>
+    <class>DataAccess.Entity.RolesPermissions</class>
+    <class>DataAccess.Entity.User</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
