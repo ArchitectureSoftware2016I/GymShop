@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Tienda Deportiva</title>
+        <!--Import materialize.css-->
+        <h:outputStylesheet library="css" name="materialize.min.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+        <h:outputStylesheet library="css" name="ghpages-materialize.css"  />
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <header>
+             <ui:include src="header.xhtml" />
+        </header>
+        <main>
+            <div class="container">
+                <div class="row">
+                    <h2>¡Esto es triste! :(</h2>
+                    <p class="caption">Al parecer estás intentando acceder a un recurso que sólo está disponible para administradores y vendedores. Ingresa al sistema o solicita acceso </p>
+                </div>
+            </div>
+        </main>
+    <!--Import jQuery before materialize.js-->
+    <h:outputScript library="js" name="jquery-2.1.1.min.js" />
+    <h:outputScript library="js" name="materialize.min.js" />
+    </h:body>
+</html>

@@ -6,7 +6,9 @@
 package Presentation.Bean;
 
 import BusinessLogic.Controller.Authorize;
+import BusinessLogic.Controller.ManageUsers;
 import Presentation.Bean.SessionBean;
+import java.io.IOException;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -24,11 +26,20 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 @ViewScoped
 @Dependent
-public class loginBean implements Serializable {
+public class userBean implements Serializable {
 
     private String password;
     private String username;
     private String msg;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPassword() {
         return password;
@@ -56,11 +67,12 @@ public class loginBean implements Serializable {
 
     public String validateLogin() {
         Authorize auth = new Authorize();
-        boolean valid = auth.loginAuthorize(username, password);
-        if (valid) {
+        Integer valid = auth.loginAuthorize(username, password);
+        if (valid > 0) {
             HttpSession session = SessionBean.getSession();
             session.setAttribute("username", username);
-            return "admin";
+            session.setAttribute("rol", valid.toString());
+            return "logged";
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
@@ -72,10 +84,24 @@ public class loginBean implements Serializable {
     }
 
     //logout event, invalidate session
-    public String logout() {
+    public String logout() throws IOException {
         HttpSession session = SessionBean.getSession();
         session.invalidate();
+        String root = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(root+"/faces/index.xhtml");
         return "login";
+    }
+    
+    public void signup() {
+        ManageUsers userController = new ManageUsers();
+        int answer;
+        answer = userController.createAccount(name, password, username);
+        if (answer != 400) {
+            msg = "¡Tu cuenta de usuario ha sido creada exitosamente!";
+        }
+        else {
+            msg = "Ocurrió un error y no pudimos crear tu cuenta";
+        }
     }
 
 

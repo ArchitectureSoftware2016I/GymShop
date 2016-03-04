@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a></div>
+    <c:set var="root" value="#{request.contextPath}/faces/" />
+    <ul id="nav-mobile" class="side-nav fixed" style="left: 0px;">
+        <li class="logo"><a id="logo-container" href="#{root}index.xhtml" class="brand-logo">
+            <h:graphicImage library="images" name="logo.png" /></a>
+        </li>       
+        <li class="bold"><a href="#{root}signup.xhtml" class="waves-effect waves-teal">Crea una cuenta</a></li>
+        <li class="bold"><a href="#{root}login.xhtml" class="waves-effect waves-teal">Ingresar a tu cuenta</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Productos</a>
+              <div class="collapsible-body" style="display: block;">
+                <ul>
+                  <li><a href="#{root}product/List.xhtml">Listar</a></li>
+                  <li><a href="#{root}product/Create.xhtml">Añadir</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Usuarios</a>
+              <div class="collapsible-body" style="display: block;">
+                <ul>
+                  <li><a href="#{root}user/List.xhtml">Listar</a></li>
+                  <li><a href="#{root}user/Create.xhtml">Añadir</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <h:form>
+        <div class="center-align"><h:commandButton action="#{userBean.logout}" value="Cerrar sesión" class="waves-effect waves-light btn signup red"></h:commandButton></div>
+        </h:form>
+    </ul>
+</ui:composition>

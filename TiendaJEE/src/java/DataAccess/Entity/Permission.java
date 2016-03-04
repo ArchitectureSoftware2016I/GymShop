@@ -9,11 +9,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,28 +23,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juansaab
  */
 @Entity
-@Table(name = "Permissions")
+@Table(name = "Permission")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Permissions.findAll", query = "SELECT p FROM Permissions p"),
-    @NamedQuery(name = "Permissions.findByIdPermission", query = "SELECT p FROM Permissions p WHERE p.idPermission = :idPermission"),
-    @NamedQuery(name = "Permissions.findByName", query = "SELECT p FROM Permissions p WHERE p.name = :name")})
-public class Permissions implements Serializable {
+    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p"),
+    @NamedQuery(name = "Permission.findByIdPermission", query = "SELECT p FROM Permission p WHERE p.idPermission = :idPermission"),
+    @NamedQuery(name = "Permission.findByName", query = "SELECT p FROM Permission p WHERE p.name = :name")})
+public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idPermission")
     private Integer idPermission;
-    @Size(max = 45)
+    @Size(max = 200)
     @Column(name = "name")
     private String name;
 
-    public Permissions() {
+    public Permission() {
     }
 
-    public Permissions(Integer idPermission) {
+    public Permission(Integer idPermission) {
         this.idPermission = idPermission;
     }
 
@@ -73,10 +74,10 @@ public class Permissions implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Permissions)) {
+        if (!(object instanceof Permission)) {
             return false;
         }
-        Permissions other = (Permissions) object;
+        Permission other = (Permission) object;
         if ((this.idPermission == null && other.idPermission != null) || (this.idPermission != null && !this.idPermission.equals(other.idPermission))) {
             return false;
         }
@@ -85,7 +86,7 @@ public class Permissions implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Permissions[ idPermission=" + idPermission + " ]";
+        return "DataAccess.Entity.Permission[ idPermission=" + idPermission + " ]";
     }
     
 }

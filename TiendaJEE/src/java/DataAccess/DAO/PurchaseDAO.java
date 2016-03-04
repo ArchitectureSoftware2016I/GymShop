@@ -5,7 +5,7 @@
  */
 package DataAccess.DAO;
 
-import DataAccess.Entity.Purchases;
+import DataAccess.Entity.Purchase;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class PurchaseDAO {
     public EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("TiendaJEEPU");
     
-    public Purchases persist(Purchases purchase) {
+    public Purchase persist(Purchase purchase) {
         EntityManager em = emf1.createEntityManager();
         em.getTransaction().begin();
         
@@ -35,12 +35,12 @@ public class PurchaseDAO {
     }
     
     
-    public Purchases searchById(Integer idPurchase) {
+    public Purchase searchById(Integer idPurchase) {
         EntityManager em = emf1.createEntityManager();
-        Purchases purchase = null;
+        Purchase purchase = null;
         
         try {
-            purchase = em.find(Purchases.class
+            purchase = em.find(Purchase.class
                     , idPurchase);
         } catch (Exception e){
         } finally {
@@ -49,13 +49,13 @@ public class PurchaseDAO {
         }
     }
     
-    public Purchases searchByBuyer(Integer idBuyer) {
+    public Purchase searchByBuyer(Integer idBuyer) {
         EntityManager em = emf1.createEntityManager();
-        Purchases purchase = null;
+        Purchase purchase = null;
         Query q = em.createNamedQuery("Purchases.findByBuyerId");
         q.setParameter(1, idBuyer);
         try {          
-            purchase = (Purchases) q.getSingleResult();
+            purchase = (Purchase) q.getSingleResult();
         } catch (Exception e){
         } finally {
             em.close();
@@ -63,9 +63,9 @@ public class PurchaseDAO {
         }
     }
     
-    public List<Purchases> searchAll() {
+    public List<Purchase> searchAll() {
         EntityManager em = emf1.createEntityManager();
-        List<Purchases> purchases = null;
+        List<Purchase> purchases = null;
         Query q = em.createNamedQuery("Purchases.findAll");
         try {          
             purchases = q.getResultList();
@@ -76,12 +76,12 @@ public class PurchaseDAO {
         }
     }
     
-    public void edit(Purchases purchase){
-        Purchases purchaseNew;
+    public void edit(Purchase purchase){
+        Purchase purchaseNew;
         EntityManager em = emf1.createEntityManager();  
         em.getTransaction().begin();
         try {
-            purchaseNew = em.merge(em.find(Purchases.class, purchase.getIdPurchase())); 
+            purchaseNew = em.merge(em.find(Purchase.class, purchase.getIdPurchase())); 
             purchaseNew.setBuyerId(purchase.getBuyerId());
             purchaseNew.setDate(purchase.getDate());
             purchaseNew.setTotal(purchase.getTotal());
@@ -94,7 +94,7 @@ public class PurchaseDAO {
     
     public boolean isEmpty() {
         EntityManager em = emf1.createEntityManager();
-        List<Purchases> purchases = null;
+        List<Purchase> purchases = null;
         Query q = em.createNamedQuery("Purchases.findAll");
         try {          
             purchases = q.getResultList();

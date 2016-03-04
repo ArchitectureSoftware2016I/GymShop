@@ -1,35 +1,35 @@
 
 -- -----------------------------------------------------
--- Data for table `tienda`.`Roles`
+-- Data for table `tienda`.`Rol`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tienda`;
-INSERT INTO `tienda`.`Roles` (`idRol`, `name`) VALUES (1, 'admin');
+INSERT INTO `tienda`.`Rol` (`name`) VALUES ('admin');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tienda`.`Users`
+-- Data for table `tienda`.`User`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tienda`;
-INSERT INTO `tienda`.`Users` (`idUser`, `name`, `password`, `username`, `rol`) VALUES (1, 'Administrador', '123456', 'admin', 1);
+INSERT INTO `tienda`.`User` (`name`, `password`, `username`, `rol`) VALUES ('Administrador', '123456', 'admin', 1);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tienda`.`Permissions`
+-- Data for table `tienda`.`Permission`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tienda`;
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (1, 'Crear cuenta');
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (2, 'Administrar cuentas');
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (3, 'Administrar roles');
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (4, 'Crear producto');
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (5, 'Administrar productos');
-INSERT INTO `tienda`.`Permissions` (`idPermission`, `name`) VALUES (6, 'Comprar producto');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (1, 'Crear cuenta');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (2, 'Administrar cuentas');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (3, 'Administrar roles');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (4, 'Crear producto');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (5, 'Administrar productos');
+INSERT INTO `tienda`.`Permission` (`idPermission`, `name`) VALUES (6, 'Comprar producto');
 
 COMMIT;
 

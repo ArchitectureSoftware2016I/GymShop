@@ -13,16 +13,11 @@ import DataAccess.DAO.UsersDAO;
  */
 public class Authorize {
     
-    public boolean loginAuthorize(String username, String password) {
+    public int loginAuthorize(String username, String password) {
         UsersDAO userDAO = new UsersDAO();
-        boolean valid = userDAO.validateLogin(username, password);
+        int valid = userDAO.validateLogin(username, password);
         
-        if (valid) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return valid;
     }
     
     

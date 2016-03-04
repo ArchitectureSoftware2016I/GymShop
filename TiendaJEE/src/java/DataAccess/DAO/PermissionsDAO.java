@@ -5,7 +5,7 @@
  */
 package DataAccess.DAO;
 
-import DataAccess.Entity.Permissions;
+import DataAccess.Entity.Permission;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class PermissionsDAO {
     public EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("TiendaJEEPU");
     
-    public Permissions persist(Permissions permission) {
+    public Permission persist(Permission permission) {
         EntityManager em = emf1.createEntityManager();
         em.getTransaction().begin();
         
@@ -34,12 +34,12 @@ public class PermissionsDAO {
         }
     }
     
-    public Permissions searchById(Integer idPermission) {
+    public Permission searchById(Integer idPermission) {
         EntityManager em = emf1.createEntityManager();
-        Permissions permission = null;
+        Permission permission = null;
         
         try {
-            permission = em.find(Permissions.class
+            permission = em.find(Permission.class
                     , idPermission);
         } catch (Exception e){
         } finally {
@@ -48,13 +48,13 @@ public class PermissionsDAO {
         }
     }
     
-    public Permissions searchByName(String name) {
+    public Permission searchByName(String name) {
         EntityManager em = emf1.createEntityManager();
-        Permissions permission = null;
+        Permission permission = null;
         Query q = em.createNamedQuery("Permissions.findByName");
         q.setParameter(1, name);
         try {          
-            permission = (Permissions) q.getSingleResult();
+            permission = (Permission) q.getSingleResult();
         } catch (Exception e){
         } finally {
             em.close();
@@ -62,9 +62,9 @@ public class PermissionsDAO {
         }
     }
     
-    public List<Permissions> searchAll() {
+    public List<Permission> searchAll() {
         EntityManager em = emf1.createEntityManager();
-        List<Permissions> permissions = null;
+        List<Permission> permissions = null;
         Query q = em.createNamedQuery("Permissions.findAll");
         try {          
             permissions = q.getResultList();
@@ -75,12 +75,12 @@ public class PermissionsDAO {
         }
     }
     
-    public void edit(Permissions permission){
-        Permissions permissionNew;
+    public void edit(Permission permission){
+        Permission permissionNew;
         EntityManager em = emf1.createEntityManager();  
         em.getTransaction().begin();
         try {
-            permissionNew = em.merge(em.find(Permissions.class, permission.getIdPermission())); 
+            permissionNew = em.merge(em.find(Permission.class, permission.getIdPermission())); 
             permissionNew.setName(permission.getName());
             em.getTransaction().commit();
         } catch (Exception e){
@@ -92,7 +92,7 @@ public class PermissionsDAO {
     
     public boolean isEmpty() {
         EntityManager em = emf1.createEntityManager();
-        List<Permissions> permissions = null;
+        List<Permission> permissions = null;
         Query q = em.createNamedQuery("Permissions.findAll");
         try {          
             permissions = q.getResultList();
