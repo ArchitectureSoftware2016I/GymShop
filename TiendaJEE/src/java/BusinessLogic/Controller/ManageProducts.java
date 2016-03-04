@@ -1,7 +1,7 @@
 package BusinessLogic.Controller;
 
 import DataAccess.DAO.ProductDAO;
-import DataAccess.Entity.Products;
+import DataAccess.Entity.Product;
 
 /**
  *  * Basarse en List of HTTP status codes
@@ -31,7 +31,7 @@ public class ManageProducts {
 	 * @param img
 	 */
 	public int createProduct(String name, float price, int stock, String img){
-		Products products = new Products();
+		Product products = new Product();
                 products.setName(name);
                 products.setPrice(price);
                 products.setAvailable(stock);
@@ -39,7 +39,7 @@ public class ManageProducts {
                 products.setDescription("Product called " + name + " which price is " + price);
                 
                 ProductDAO productsDAO = new ProductDAO();
-                Products productE = productsDAO.persist(products);
+                Product productE = productsDAO.persist(products);
                 if (productE != null)
                     return productE.getIdProduct();
                 else
@@ -53,7 +53,7 @@ public class ManageProducts {
 	public int deleteProduct(int ID){
             try{
 		ProductDAO productDAO = new ProductDAO();
-                Products productE = productDAO.searchById(ID);
+                Product productE = productDAO.searchById(ID);
                 productE.setAvailable(0);
                 productE.setDescription("Product deleted");
                 productDAO.edit(productE);
@@ -73,7 +73,7 @@ public class ManageProducts {
 	 */
 	public int editProduct(int productID, String name, String img, String description, float price){
             ProductDAO productDAO = new ProductDAO();
-            Products productE = productDAO.searchById(productID);
+            Product productE = productDAO.searchById(productID);
             productE.setPrice(price);
             productE.setDescription(description);
             productE.setName(name);
@@ -94,7 +94,7 @@ public class ManageProducts {
 	 */
 	public int editStock(int productID, int stock){
             ProductDAO productDAO = new ProductDAO();
-            Products productE = productDAO.searchById(productID);
+            Product productE = productDAO.searchById(productID);
             productE.setAvailable(stock);
             try{
                 productDAO.edit(productE);
@@ -108,13 +108,13 @@ public class ManageProducts {
 	 * 
 	 * @param productID
 	 */
-	public Products getProduct(int productID){
+	public Product getProduct(int productID){
             try{
                 ProductDAO productDAO = new ProductDAO();
-                Products productE = productDAO.searchById(productID);
+                Product productE = productDAO.searchById(productID);
                 return productE;
             } catch(Exception e) {
-                return new Products();
+                return new Product();
             }
 	}
 }//end manageProducts

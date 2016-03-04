@@ -3,7 +3,7 @@ package BusinessLogic.Controller;
 import DataAccess.DAO.PurchaseDAO;
 import DataAccess.DAO.PurchaseDetailsDAO;
 import DataAccess.Entity.PurchaseDetails;
-import DataAccess.Entity.Purchases;
+import DataAccess.Entity.Purchase;
 import java.util.Date;
 import java.util.List;
 
@@ -32,14 +32,14 @@ public class MakePurchase {
 	 */
 	public int buy(int clientID, int[] productsID, int[] quantity, float value){
             boolean failed = false;
-            Purchases purchase = new Purchases();
+            Purchase purchase = new Purchase();
             Date now = new Date();
             purchase.setBuyerId(clientID);
             purchase.setDate(now);
             purchase.setTotal(value);
             
             PurchaseDAO purchasesDAO = new PurchaseDAO();
-            Purchases purchasesE = purchasesDAO.persist(purchase);
+            Purchase purchasesE = purchasesDAO.persist(purchase);
             
             for(int i=0; i<productsID.length; i++){
                 PurchaseDetails purchaseDetails = new PurchaseDetails();
@@ -74,7 +74,7 @@ public class MakePurchase {
             boolean failed = false;
             
             PurchaseDAO purchasesDAO = new PurchaseDAO();
-            Purchases purchasesE = purchasesDAO.searchById(purchaseID);
+            Purchase purchasesE = purchasesDAO.searchById(purchaseID);
             purchasesE.setBuyerId(clientID);
             purchasesE.setDate(newDate);
             purchasesE.setTotal(value);
@@ -110,9 +110,9 @@ public class MakePurchase {
 	 * 
 	 * @param purchaseID
 	 */
-	public Purchases getPurchaseByID(int purchaseID){
+	public Purchase getPurchaseByID(int purchaseID){
 		PurchaseDAO purchaseDAO = new PurchaseDAO();
-                Purchases purchasesE = purchaseDAO.searchById(purchaseID);
+                Purchase purchasesE = purchaseDAO.searchById(purchaseID);
                 return purchasesE;
 	}
         
@@ -120,9 +120,9 @@ public class MakePurchase {
 	 * 
 	 * @param userID
 	 */
-	public Purchases getPurchaseByUser(int userID){
+	public Purchase getPurchaseByUser(int userID){
 		PurchaseDAO purchaseDAO = new PurchaseDAO();
-                Purchases purchasesE = purchaseDAO.searchByBuyer(userID);
+                Purchase purchasesE = purchaseDAO.searchByBuyer(userID);
                 return purchasesE;
 	}
 }//end makePurchase

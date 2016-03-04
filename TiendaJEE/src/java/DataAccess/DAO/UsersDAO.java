@@ -5,7 +5,7 @@
  */
 package DataAccess.DAO;
 
-import DataAccess.Entity.Users;
+import DataAccess.Entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,13 +20,14 @@ public class UsersDAO {
     
     public EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("TiendaJEEPU");
     
-    public Users persist(Users user) {
+    public User persist(User user) {
         EntityManager em = emf1.createEntityManager();
         em.getTransaction().begin();
         
         try {
             em.persist(user);
             em.getTransaction().commit();
+            em.flush();
         } catch(Exception e) {
             em.getTransaction().rollback();
         } finally {
@@ -35,33 +36,33 @@ public class UsersDAO {
         }
     }
     
-    public boolean validateLogin(String username, String password) {
+    public int validateLogin(String username, String password) {
         EntityManager em = emf1.createEntityManager();
-        Users user = null;
-        Query q = em.createNamedQuery("Users.findByUsername");
+        User user = null;
+        Query q = em.createNamedQuery("User.findByUsername");
         q.setParameter("username", username);
  
         try {
-            user = (Users) q.getSingleResult();
+            user = (User) q.getSingleResult();
             if (user.getPassword().equals(password)) {
-                return true;
+                return user.getRol();
             }
             else {
-                return false;
+                return -1;
             }
         } catch (Exception e) {
-            return false;
+            return -1;
         } finally {
             em.close();
         }
     }
     
-    public Users searchById(Integer idUser) {
+    public User searchById(Integer idUser) {
         EntityManager em = emf1.createEntityManager();
-        Users user = null;
+        User user = null;
         
         try {
-            user = em.find(Users.class
+            user = em.find(User.class
                     , idUser);
         } catch (Exception e){
         } finally {
@@ -70,13 +71,13 @@ public class UsersDAO {
         }
     }
     
-    public Users searchByUsername(String username) {
+    public User searchByUsername(String username) {
         EntityManager em = emf1.createEntityManager();
-        Users user = null;
+        User user = null;
         Query q = em.createNamedQuery("Users.findByUsername");
         q.setParameter(1, username);
         try {          
-            user = (Users) q.getSingleResult();
+            user = (User) q.getSingleResult();
         } catch (Exception e){
         } finally {
             em.close();
@@ -84,9 +85,9 @@ public class UsersDAO {
         }
     }
     
-    public List<Users> searchAll() {
+    public List<User> searchAll() {
         EntityManager em = emf1.createEntityManager();
-        List<Users> users = null;
+        List<User> users = null;
         Query q = em.createNamedQuery("Users.findAll");
         try {          
             users = q.getResultList();
@@ -97,12 +98,12 @@ public class UsersDAO {
         }
     }
     
-    public void edit(Users user){
-        Users userNew;
+    public void edit(User user){
+        User userNew;
         EntityManager em = emf1.createEntityManager();  
         em.getTransaction().begin();
         try {
-            userNew = em.merge(em.find(Users.class, user.getIdUser())); 
+            userNew = em.merge(em.find(User.class, user.getIdUser())); 
             userNew.setName(user.getName());
             userNew.setPassword(user.getPassword());
             userNew.setRol(user.getRol());
@@ -116,7 +117,7 @@ public class UsersDAO {
     
     public boolean isEmpty() {
         EntityManager em = emf1.createEntityManager();
-        List<Users> users = null;
+        List<User> users = null;
         Query q = em.createNamedQuery("Users.findAll");
         try {          
             users = q.getResultList();

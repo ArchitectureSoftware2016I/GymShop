@@ -1,12 +1,68 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Tienda Deportiva</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <!--Import materialize.css-->
+        <h:outputStylesheet library="css" name="materialize.min.css"  />
+        <h:outputStylesheet library="css" name="ghpages-materialize.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <header>
+            <ui:include src="header.xhtml" />
+        </header>
+        <main>
+            <div class="section" id="index-banner">
+                <div class="container">
+                    <div class="row">
+                        <h1 class="header center-on-small-only">Tienda Deportiva</h1>
+                        <h4 class="light red-text text-lighten-4 center-on-small-only">Todo lo que buscas, a un click</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                        <ui:repeat value="#{productBean.products}" var="product">
+                                <div class="col s4">
+                                    <div class="card">
+                                        <div class="card-image waves-effect waves-light">
+                                            <h:graphicImage library="images" class="activator" name="#{product.picture}" />
+                                        </div>
+                                        <div class="card-content">
+                                            <span class="card-title blue-text text-darken-2">#{product.name}</span>
+                                            <p>$#{product.price}</p>
+                                            
+                                        </div>
+                                        <div class="card-reveal">
+                                            <span class="card-title blue-text text-darken-2">#{product.name}</span>
+                                            <p>$#{product.price}</p>
+                                            <p>#{product.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </ui:repeat>
+                </div>
+            </div>
+        </main>
+        <!--Import jQuery before materialize.js-->
+        <h:outputScript library="js" name="jquery-2.1.1.min.js" />
+        <h:outputScript library="js" name="materialize.min.js" />
+        <br />
+        <h:link outcome="/product/List" value="Show All Product Items"/>
+        <br />
+        <h:link outcome="/purchase/List" value="Show All Purchase Items"/>
+        <br />
+        <h:link outcome="/user/List" value="Show All User Items"/>
     </h:body>
+
+
+
 </html>
 

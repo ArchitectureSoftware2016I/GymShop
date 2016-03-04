@@ -5,7 +5,7 @@
  */
 package DataAccess.DAO;
 
-import DataAccess.Entity.Roles;
+import DataAccess.Entity.Rol;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class RolesDAO {
     public EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("TiendaJEEPU");
     
-    public Roles persist(Roles role) {
+    public Rol persist(Rol role) {
         EntityManager em = emf1.createEntityManager();
         em.getTransaction().begin();
         
@@ -34,12 +34,12 @@ public class RolesDAO {
         }
     }
     
-    public Roles searchById(Integer idRoles) {
+    public Rol searchById(Integer idRoles) {
         EntityManager em = emf1.createEntityManager();
-        Roles role = null;
+        Rol role = null;
         
         try {
-            role = em.find(Roles.class
+            role = em.find(Rol.class
                     , idRoles);
         } catch (Exception e){
         } finally {
@@ -48,13 +48,13 @@ public class RolesDAO {
         }
     }
     
-    public Roles searchByName(String name) {
+    public Rol searchByName(String name) {
         EntityManager em = emf1.createEntityManager();
-        Roles role = null;
+        Rol role = null;
         Query q = em.createNamedQuery("Roles.findByName");
         q.setParameter(1, name);
         try {          
-            role = (Roles) q.getSingleResult();
+            role = (Rol) q.getSingleResult();
         } catch (Exception e){
         } finally {
             em.close();
@@ -62,9 +62,9 @@ public class RolesDAO {
         }
     }
     
-    public List<Roles> searchAll() {
+    public List<Rol> searchAll() {
         EntityManager em = emf1.createEntityManager();
-        List<Roles> roles = null;
+        List<Rol> roles = null;
         Query q = em.createNamedQuery("Roles.findAll");
         try {          
             roles = q.getResultList();
@@ -75,12 +75,12 @@ public class RolesDAO {
         }
     }
     
-    public void edit(Roles role){
-        Roles roleNew;
+    public void edit(Rol role){
+        Rol roleNew;
         EntityManager em = emf1.createEntityManager();  
         em.getTransaction().begin();
         try {
-            roleNew = em.merge(em.find(Roles.class, role.getIdRol())); 
+            roleNew = em.merge(em.find(Rol.class, role.getIdRol())); 
             roleNew.setName(role.getName());
             em.getTransaction().commit();
         } catch (Exception e){
@@ -92,7 +92,7 @@ public class RolesDAO {
     
     public boolean isEmpty() {
         EntityManager em = emf1.createEntityManager();
-        List<Roles> roles = null;
+        List<Rol> roles = null;
         Query q = em.createNamedQuery("Roles.findAll");
         try {          
             roles = q.getResultList();

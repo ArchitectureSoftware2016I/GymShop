@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPurchaseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPurchaseEmpty}" rendered="#{purchaseController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{purchaseController.items.rowCount > 0}">
+                    <h:outputText value="#{purchaseController.pagination.pageFirstItem + 1}..#{purchaseController.pagination.pageLastItem + 1}/#{purchaseController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{purchaseController.previous}" value="#{bundle.Previous} #{purchaseController.pagination.pageSize}" rendered="#{purchaseController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{purchaseController.next}" value="#{bundle.Next} #{purchaseController.pagination.pageSize}" rendered="#{purchaseController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{purchaseController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPurchaseTitle_idPurchase}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idPurchase}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPurchaseTitle_buyerId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.buyerId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPurchaseTitle_sellerId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sellerId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPurchaseTitle_date}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.date}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPurchaseTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{purchaseController.prepareView}" value="#{bundle.ListPurchaseViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{purchaseController.prepareEdit}" value="#{bundle.ListPurchaseEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{purchaseController.destroy}" value="#{bundle.ListPurchaseDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{purchaseController.prepareCreate}" value="#{bundle.ListPurchaseCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListPurchaseIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

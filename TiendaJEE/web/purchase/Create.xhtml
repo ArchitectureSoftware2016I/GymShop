@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePurchaseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePurchaseLabel_idPurchase}" for="idPurchase" />
+                    <h:inputText id="idPurchase" value="#{purchaseController.selected.idPurchase}" title="#{bundle.CreatePurchaseTitle_idPurchase}" required="true" requiredMessage="#{bundle.CreatePurchaseRequiredMessage_idPurchase}"/>
+                    <h:outputLabel value="#{bundle.CreatePurchaseLabel_buyerId}" for="buyerId" />
+                    <h:inputText id="buyerId" value="#{purchaseController.selected.buyerId}" title="#{bundle.CreatePurchaseTitle_buyerId}" />
+                    <h:outputLabel value="#{bundle.CreatePurchaseLabel_sellerId}" for="sellerId" />
+                    <h:inputText id="sellerId" value="#{purchaseController.selected.sellerId}" title="#{bundle.CreatePurchaseTitle_sellerId}" />
+                    <h:outputLabel value="#{bundle.CreatePurchaseLabel_date}" for="date" />
+                    <h:inputText id="date" value="#{purchaseController.selected.date}" title="#{bundle.CreatePurchaseTitle_date}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreatePurchaseLabel_total}" for="total" />
+                    <h:inputText id="total" value="#{purchaseController.selected.total}" title="#{bundle.CreatePurchaseTitle_total}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{purchaseController.create}" value="#{bundle.CreatePurchaseSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{purchaseController.prepareList}" value="#{bundle.CreatePurchaseShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePurchaseIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -10,13 +10,14 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,21 +25,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juansaab
  */
 @Entity
-@Table(name = "Purchases")
+@Table(name = "Purchase")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Purchases.findAll", query = "SELECT p FROM Purchases p"),
-    @NamedQuery(name = "Purchases.findByIdPurchase", query = "SELECT p FROM Purchases p WHERE p.idPurchase = :idPurchase"),
-    @NamedQuery(name = "Purchases.findByBuyerId", query = "SELECT p FROM Purchases p WHERE p.buyerId = :buyerId"),
-    @NamedQuery(name = "Purchases.findBySellerId", query = "SELECT p FROM Purchases p WHERE p.sellerId = :sellerId"),
-    @NamedQuery(name = "Purchases.findByDate", query = "SELECT p FROM Purchases p WHERE p.date = :date"),
-    @NamedQuery(name = "Purchases.findByTotal", query = "SELECT p FROM Purchases p WHERE p.total = :total")})
-public class Purchases implements Serializable {
+    @NamedQuery(name = "Purchase.findAll", query = "SELECT p FROM Purchase p"),
+    @NamedQuery(name = "Purchase.findByIdPurchase", query = "SELECT p FROM Purchase p WHERE p.idPurchase = :idPurchase"),
+    @NamedQuery(name = "Purchase.findByBuyerId", query = "SELECT p FROM Purchase p WHERE p.buyerId = :buyerId"),
+    @NamedQuery(name = "Purchase.findBySellerId", query = "SELECT p FROM Purchase p WHERE p.sellerId = :sellerId"),
+    @NamedQuery(name = "Purchase.findByDate", query = "SELECT p FROM Purchase p WHERE p.date = :date"),
+    @NamedQuery(name = "Purchase.findByTotal", query = "SELECT p FROM Purchase p WHERE p.total = :total")})
+public class Purchase implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idPurchase")
     private Integer idPurchase;
     @Column(name = "buyerId")
@@ -52,10 +53,10 @@ public class Purchases implements Serializable {
     @Column(name = "total")
     private Float total;
 
-    public Purchases() {
+    public Purchase() {
     }
 
-    public Purchases(Integer idPurchase) {
+    public Purchase(Integer idPurchase) {
         this.idPurchase = idPurchase;
     }
 
@@ -109,10 +110,10 @@ public class Purchases implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Purchases)) {
+        if (!(object instanceof Purchase)) {
             return false;
         }
-        Purchases other = (Purchases) object;
+        Purchase other = (Purchase) object;
         if ((this.idPurchase == null && other.idPurchase != null) || (this.idPurchase != null && !this.idPurchase.equals(other.idPurchase))) {
             return false;
         }
@@ -121,7 +122,7 @@ public class Purchases implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Purchases[ idPurchase=" + idPurchase + " ]";
+        return "DataAccess.Entity.Purchase[ idPurchase=" + idPurchase + " ]";
     }
     
 }

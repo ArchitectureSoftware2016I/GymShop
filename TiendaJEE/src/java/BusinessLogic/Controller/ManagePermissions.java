@@ -2,7 +2,7 @@ package BusinessLogic.Controller;
 
 import DataAccess.DAO.PermissionsDAO;
 import DataAccess.DAO.RolesPermissionsDAO;
-import DataAccess.Entity.Permissions;
+import DataAccess.Entity.Permission;
 import DataAccess.Entity.RolesPermissions;
 import java.util.List;
 
@@ -31,11 +31,11 @@ public class ManagePermissions {
 	 * @param name
 	 */
 	public int addPermission(String name){
-            Permissions permission = new Permissions();
+            Permission permission = new Permission();
             permission.setName(name);
             
             PermissionsDAO permissionsDAO = new PermissionsDAO();
-            Permissions permissionsE = permissionsDAO.persist(permission);
+            Permission permissionsE = permissionsDAO.persist(permission);
             
             if (permissionsE != null) {
                 return permissionsE.getIdPermission();
@@ -71,7 +71,7 @@ public class ManagePermissions {
 	 */
 	public int editPermission(int permissionID, String name){
             PermissionsDAO permissionsDAO = new PermissionsDAO();
-            Permissions permissionsE = permissionsDAO.searchById(permissionID);
+            Permission permissionsE = permissionsDAO.searchById(permissionID);
             permissionsE.setName(name);
             
             try{
@@ -87,13 +87,13 @@ public class ManagePermissions {
 	 * 
 	 * @param permissionID
 	 */
-	public Permissions getPermission(int permissionID){
+	public Permission getPermission(int permissionID){
             try{
                 PermissionsDAO permissionsDAO = new PermissionsDAO();
-                Permissions permissionsE = permissionsDAO.searchById(permissionID);
+                Permission permissionsE = permissionsDAO.searchById(permissionID);
                 return permissionsE;
             } catch(Exception e){
-                return new Permissions();
+                return new Permission();
             }
 	}
 
