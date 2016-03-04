@@ -21,11 +21,14 @@ public class MakePurchase {
 
 	}
 	/**
-	 * 
+         * Operation for make a buy where lenght of products ID must be the same of quantity´s lenght
+         * 
 	 * @param clientID
 	 * @param productsID
          * @param quantity
 	 * @param value
+         * 
+         * @return if is ok 200, and 400 in other case
 	 */
 	public int buy(int clientID, int[] productsID, int[] quantity, float value){
             boolean failed = false;
