@@ -3,12 +3,14 @@ package Presentation.Bean;
 import DataAccess.Entity.User;
 import Presentation.Bean.util.JsfUtil;
 import Presentation.Bean.util.PaginationHelper;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -16,6 +18,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 
 @Named("userController")
 @SessionScoped
@@ -29,6 +32,41 @@ public class UserController implements Serializable {
     private int selectedItemIndex;
 
     public UserController() {
+    }
+    
+    public String validateLogin() {
+        User userQuery = new User();
+        Boolean valid = false;
+        try {
+            userQuery = getFacade().getByUsername(current.getUsername()); 
+            if (userQuery.getPassword().equals(current.getPassword())) 
+                valid = true;
+        }
+        catch (Exception e){
+            
+        }
+        if (valid) {
+            HttpSession session = SessionBean.getSession();
+            session.setAttribute("username", current.getUsername());
+            session.setAttribute("rol", userQuery.getRol());
+            return "logged";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrect Username and Password",
+                            "Please enter correct username and Password"));
+            return "login";
+        }
+    }
+
+    //logout event, invalidate session
+    public String logout() throws IOException {
+        HttpSession session = SessionBean.getSession();
+        session.invalidate();
+        String root = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(root+"/faces/index.xhtml");
+        return "login";
     }
 
     public User getSelected() {
@@ -80,6 +118,18 @@ public class UserController implements Serializable {
 
     public String create() {
         try {
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("UserCreated"));
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+    
+    public String createPublic() {
+        try {
+            current.setRol(3);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("UserCreated"));
             return prepareCreate();
