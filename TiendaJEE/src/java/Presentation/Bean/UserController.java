@@ -1,6 +1,7 @@
 package Presentation.Bean;
 
 import DataAccess.Entity.User;
+import DataAccess.DAO.UserDAO;
 import Presentation.Bean.util.JsfUtil;
 import Presentation.Bean.util.PaginationHelper;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class UserController implements Serializable {
     private User current;
     private DataModel items = null;
     @EJB
-    private Presentation.Bean.UserFacade ejbFacade;
+    private DataAccess.DAO.UserDAO ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -77,7 +78,7 @@ public class UserController implements Serializable {
         return current;
     }
 
-    private UserFacade getFacade() {
+    private UserDAO getFacade() {
         return ejbFacade;
     }
 

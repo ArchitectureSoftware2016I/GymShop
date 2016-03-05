@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Presentation.Bean;
+package DataAccess.DAO;
 
 import DataAccess.Entity.User;
+import Presentation.Bean.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author juansaab
  */
 @Stateless
-public class UserFacade extends AbstractFacade<User> {
+public class UserDAO extends AbstractFacade<User> {
 
     @PersistenceContext(unitName = "TiendaJEEPU")
     private EntityManager em;
@@ -25,12 +26,12 @@ public class UserFacade extends AbstractFacade<User> {
         return em;
     }
 
-    public UserFacade() {
+    public UserDAO() {
         super(User.class);
     }
     
     public User getByUsername(String username){
-        return (User)em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult();
+        return (User) em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult();
     }
     
 }
