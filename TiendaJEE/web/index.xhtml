@@ -29,21 +29,31 @@
             </div>
             <div class="container">
                 <div class="row">
-                        <ui:repeat value="#{productBean.products}" var="product">
+                        <ui:repeat value="#{productController.items}" var="product">
                                 <div class="col s4">
                                     <div class="card">
                                         <div class="card-image waves-effect waves-light">
                                             <h:graphicImage library="images" class="activator" name="#{product.picture}" />
                                         </div>
                                         <div class="card-content">
+                                            <h:form rendered="#{not empty username}">
+                                                <div class="center-align" style="padding-bottom: 15px;">
+                                                <h:commandButton action="#" value="Comprar" class="waves-effect waves-light btn green"></h:commandButton>
+                                                </div>
+                                            </h:form>
                                             <span class="card-title blue-text text-darken-2">#{product.name}</span>
-                                            <p>$#{product.price}</p>
+                                            <p class="quantity orange-text">#{product.available} disponible(s)</p>
+                                            <p class="green-text price">$#{product.price}</p>
                                             
                                         </div>
                                         <div class="card-reveal">
                                             <span class="card-title blue-text text-darken-2">#{product.name}</span>
-                                            <p>$#{product.price}</p>
                                             <p>#{product.description}</p>
+                                            <h:form rendered="#{not empty username}">
+                                                <div class="rigth-align">
+                                                <h:commandButton action="#" value="Comprar" class="waves-effect waves-light btn signup green"></h:commandButton>
+                                                </div>
+                                            </h:form>
                                         </div>
                                     </div>
                                 </div>

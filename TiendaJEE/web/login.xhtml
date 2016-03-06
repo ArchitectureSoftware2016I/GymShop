@@ -29,16 +29,16 @@
                     <h:form>
                       <div class="row">
                         <div class="input-field col s6">
-                          <h:inputText id="username" value="#{userBean.username}" class="validate"></h:inputText>
+                            <h:inputText id="username" value="#{userController.selected.username}" class="validate"></h:inputText>
                           <label for="first_name">Usuario</label>
                         </div>
                         <div class="input-field col s6">
-                          <h:inputSecret id="password" value="#{userBean.password}" class="validate"></h:inputSecret>
+                          <h:inputSecret id="password" value="#{userController.selected.password}" class="validate"></h:inputSecret>
                           <label for="Password">Contraseña</label>
                         </div>
                       </div>
                       <div class="row">
-                        <h:commandButton action="#{userBean.validateLogin}" value="Iniciar sesión" class="waves-effect waves-light btn-large signup"></h:commandButton>
+                          <h:commandButton action="#{userController.validateLogin()}" value="Iniciar sesión" class="waves-effect waves-light btn-large signup"></h:commandButton>
                       </div>
                     </h:form>
                 </div>
