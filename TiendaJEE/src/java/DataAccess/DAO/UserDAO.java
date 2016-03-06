@@ -31,6 +31,8 @@ public class UserDAO extends AbstractFacade<User> {
     }
     
     public User getByUsername(String username){
+        
+        System.out.println(em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult());
         return (User) em.createNamedQuery("User.findByUsername").setParameter("username", username).getSingleResult();
     }
     
