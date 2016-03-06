@@ -1,5 +1,6 @@
 package Presentation.Bean;
 
+import DataAccess.DAO.ProductDAO;
 import DataAccess.Entity.Product;
 import Presentation.Bean.util.JsfUtil;
 import Presentation.Bean.util.PaginationHelper;
@@ -24,7 +25,7 @@ public class ProductController implements Serializable {
     private Product current;
     private DataModel items = null;
     @EJB
-    private Presentation.Bean.ProductFacade ejbFacade;
+    private DataAccess.DAO.ProductDAO ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -39,7 +40,7 @@ public class ProductController implements Serializable {
         return current;
     }
 
-    private ProductFacade getFacade() {
+    private ProductDAO getFacade() {
         return ejbFacade;
     }
 

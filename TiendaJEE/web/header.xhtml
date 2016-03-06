@@ -25,6 +25,20 @@ and open the template in the editor.
         <li class="bold"><a href="#{root}signup.xhtml" class="waves-effect waves-teal">Crea una cuenta</a></li>
         <li class="bold"><a href="#{root}login.xhtml" class="waves-effect waves-teal">Ingresar a tu cuenta</a></li>
         </h:form>
+        <h:form rendered="#{not empty rol}">
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Transacciones</a>
+              <div class="collapsible-body" style="display: block;">
+                <ul>
+                    <h:form rendered="#{rol == 3}"><li><a href="#{root}purchase/List.xhtml">Ver tus transacciones</a></li></h:form>
+                    <h:form rendered="#{rol == 2 or rol == 1}"><li><a href="#{root}purchase/List.xhtml">Listar todas</a></li></h:form>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        </h:form>
         <h:form rendered="#{rol == 1 or rol == 2}">
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">

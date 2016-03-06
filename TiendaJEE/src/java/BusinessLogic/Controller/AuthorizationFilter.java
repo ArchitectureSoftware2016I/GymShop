@@ -63,6 +63,15 @@ public class AuthorizationFilter implements Filter {
                     resp.sendRedirect(reqt.getContextPath() + "/faces/unauthorized.xhtml");
                 }
             }
+            
+            else if (reqURI.contains("purchase")) {
+                if (rol != 0) {
+                    chain.doFilter(request, response);
+                }
+                else {
+                    resp.sendRedirect(reqt.getContextPath() + "/faces/unauthorized.xhtml");
+                }
+            }
             else {
                 chain.doFilter(request, response);
             }
