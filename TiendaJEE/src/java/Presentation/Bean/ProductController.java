@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -22,7 +22,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("productController")
-@Stateful
+@RequestScoped
 public class ProductController implements Serializable {
 
     private Product current;
