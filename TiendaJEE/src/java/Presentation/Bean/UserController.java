@@ -50,6 +50,7 @@ public class UserController implements Serializable {
             HttpSession session = SessionBean.getSession();
             session.setAttribute("username", current.getUsername());
             session.setAttribute("rol", userQuery.getRol());
+            session.setAttribute("userId", userQuery.getIdUser());
             return "logged";
         } else {
             FacesContext.getCurrentInstance().addMessage(

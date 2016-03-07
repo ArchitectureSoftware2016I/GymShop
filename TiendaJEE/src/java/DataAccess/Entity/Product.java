@@ -134,7 +134,9 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "DataAccess.Entity.Product[ idProduct=" + idProduct + " ]";
+        return "Product{" + "idProduct=" + idProduct + ", name=" + name + ", description=" + description + ", picture=" + picture + ", price=" + price + ", available=" + available + '}';
     }
+
+    
     
 }

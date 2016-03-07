@@ -38,7 +38,7 @@
                                         <div class="card-content">
                                             <h:form rendered="#{not empty username}">
                                                 <div class="center-align" style="padding-bottom: 15px;">
-                                                <h:commandButton action="#" value="Comprar" class="waves-effect waves-light btn green"></h:commandButton>
+                                                <h:commandButton action="#{productController.sellItem(product.idProduct, userId)}" value="Comprar" class="waves-effect waves-light btn green"></h:commandButton>
                                                 </div>
                                             </h:form>
                                             <span class="card-title blue-text text-darken-2">#{product.name}</span>
@@ -50,8 +50,9 @@
                                             <span class="card-title blue-text text-darken-2">#{product.name}</span>
                                             <p>#{product.description}</p>
                                             <h:form rendered="#{not empty username}">
+                                                <h:inputHidden value="#{product.idProduct}"></h:inputHidden>
                                                 <div class="rigth-align">
-                                                <h:commandButton action="#" value="Comprar" class="waves-effect waves-light btn signup green"></h:commandButton>
+                                                    <h:commandButton action="#{productController.sellItem(product.idProduct, userId)}" value="Comprar" class="waves-effect waves-light btn signup green"></h:commandButton>
                                                 </div>
                                             </h:form>
                                         </div>

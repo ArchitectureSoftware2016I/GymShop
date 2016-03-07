@@ -43,7 +43,6 @@ public class AuthorizationFilter implements Filter {
             if (ses != null && ses.getAttribute("rol") != null) {
                 String rolId = ses.getAttribute("rol").toString();
                 rol = Integer.parseInt(rolId);
-                System.out.println("El Rol "+Integer.toString(rol));
             }
             
             if (reqURI.contains("product")) {

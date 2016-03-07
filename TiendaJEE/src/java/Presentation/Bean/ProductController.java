@@ -2,14 +2,17 @@ package Presentation.Bean;
 
 import DataAccess.DAO.ProductDAO;
 import DataAccess.Entity.Product;
+import DataAccess.Entity.Purchase;
 import Presentation.Bean.util.JsfUtil;
 import Presentation.Bean.util.PaginationHelper;
+import java.io.IOException;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,13 +22,15 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("productController")
-@SessionScoped
+@Stateful
 public class ProductController implements Serializable {
 
     private Product current;
     private DataModel items = null;
     @EJB
     private DataAccess.DAO.ProductDAO ejbFacade;
+    @EJB
+    private Presentation.Bean.PurchaseFacade purchaseFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -42,6 +47,33 @@ public class ProductController implements Serializable {
 
     private ProductDAO getFacade() {
         return ejbFacade;
+    }
+    
+    public boolean sellItem(java.lang.Integer idItem, java.lang.Integer idBuyer) throws IOException {
+        current = this.getProduct(idItem);
+        
+        if(current.getIdProduct() != null) {
+            if (current.getAvailable() > 0) {
+                current.setAvailable(current.getAvailable() - 1);
+                Purchase purchase = new Purchase();
+                purchase.setBuyerId(idBuyer);
+                purchase.setDate(new Date());
+                purchase.setSellerId(1);
+                purchase.setTotal(current.getPrice());
+                
+                this.purchaseFacade.create(purchase);
+                
+                this.update();
+                
+                String root = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+                FacesContext.getCurrentInstance().getExternalContext().redirect(root+"/faces/index.xhtml");
+            } else 
+                return false;
+        } else {
+            return false;
+        }
+        
+        return true;
     }
 
     public PaginationHelper getPagination() {
